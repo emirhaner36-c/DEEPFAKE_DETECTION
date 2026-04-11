@@ -1,0 +1,35 @@
+data:
+  data_dir: "data/raw/140k/real_vs_fake/real-vs-fake"
+  manifest_train: "data/manifests/train.csv"
+  manifest_val: "data/manifests/val.csv"
+  manifest_test: "data/manifests/test.csv"
+  image_size: 224  # 224px: fast on Mac MPS, strong accuracy
+
+model:
+  backbone: "tf_efficientnet_b4.ns_jft_in1k"  # Noisy-student variant, best generalisation
+  pretrained: true
+  num_classes: 2
+  dropout: 0.3
+
+training:
+  batch_size: 16
+  epochs: 30
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-5
+  num_workers: 0  # 0 = no subprocess overhead on Mac
+  use_amp: true              # Mixed precision (torch.cuda.amp)
+  grad_accumulation_steps: 4  # effective batch = 8 × 4 = 32
+  early_stopping_patience: 5
+  scheduler: "cosine"        # CosineAnnealingLR
+  warmup_epochs: 2
+
+augmentation:
+  rotation_limit: 15
+  brightness_limit: 0.2
+  contrast_limit: 0.2
+  horizontal_flip: true
+
+paths:
+  checkpoints: "checkpoints"
+  results: "results"
+  logs: "logs"

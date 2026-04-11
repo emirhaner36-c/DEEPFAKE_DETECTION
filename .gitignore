@@ -1,0 +1,27 @@
+# Large data files
+data/
+checkpoints/
+results/
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+*.so
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# System
+.DS_Store
+
+# Logs
+logs/
+*.log

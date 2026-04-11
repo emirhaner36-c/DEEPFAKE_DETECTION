@@ -1,0 +1,38 @@
+# Demo config — runs on Mac CPU, completes in ~15 minutes
+# Use this to verify the full pipeline locally.
+# Use config.yaml on Colab for real training.
+
+data:
+  data_dir: "data/raw/140k/real_vs_fake/real-vs-fake"
+  manifest_train: "data/manifests/demo_train.csv"
+  manifest_val:   "data/manifests/demo_val.csv"
+  manifest_test:  "data/manifests/demo_test.csv"
+  image_size: 224
+
+model:
+  backbone: "efficientnet_b0"   # Lightweight demo; use B4 on Colab for full training
+  pretrained: true
+  num_classes: 2
+  dropout: 0.3
+
+training:
+  batch_size: 16
+  epochs: 3
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-5
+  num_workers: 0
+  use_amp: false
+  grad_accumulation_steps: 1
+  early_stopping_patience: 3
+  scheduler: "cosine"
+  warmup_epochs: 1
+
+augmentation:
+  horizontal_flip: true
+  brightness_limit: 0.2
+  contrast_limit: 0.2
+
+paths:
+  checkpoints: "checkpoints/demo"
+  results: "results/demo"
+  logs: "logs/demo"
